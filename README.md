@@ -1,27 +1,82 @@
-# API de Gerenciamento de Lutadores
+# Projeto CRUD de Lutadores
 
-API RESTful para o trabalho final, criada com Node.js, Express e MongoDB para gerenciar um cadastro de lutadores.
+Este é um projeto full stack desenvolvido como trabalho final da disciplina de Linguagem de Programação para Internet. A aplicação permite o cadastro, visualização, edição e exclusão de lutadores, utilizando React no front-end e Node.js com Express e MongoDB no back-end.
 
 ## Tecnologias Utilizadas
-- Node.js
-- Express
-- MongoDB com Mongoose
-- Cors
 
-## Como Instalar e Executar
+* **Front-end:**
+    * React
+    * React Router DOM
+    * Axios
+    * CSS Modules
 
-1.  Navegue até a pasta `backend`: `cd backend`
-2.  Instale as dependências: `npm install`
-3.  Configure sua string de conexão do MongoDB no arquivo `index.js`.
-4.  Inicie o servidor: `npm start`
-5.  O servidor estará rodando em `http://localhost:5000`.
+* **Back-end:**
+    * Node.js
+    * Express
+    * MongoDB com Mongoose
+    * CORS
+
+## Instalação e Execução
+
+### Front-end
+
+1.  Clone o repositório:
+    ```bash
+    git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
+    ```
+2.  Navegue até o diretório do front-end:
+    ```bash
+    cd final
+    ```
+3.  Instale as dependências:
+    ```bash
+    npm install
+    ```
+4.  Inicie a aplicação:
+    ```bash
+    npm start
+    ```
+    A aplicação estará disponível em `http://localhost:3000`.
+
+### Back-end
+
+(Instruções para o back-end, caso esteja em um diretório separado)
 
 ## Exemplos de Chamadas da API
 
-**Criar Lutador (POST /api/fighters)**
-```json
-{
-  "name": "Ryu",
-  "style": "Ansatsuken",
-  "imageUrl": "[https://www.streetfighter.com/wp-content/uploads/2016/06/character_ryu.png](https://www.streetfighter.com/wp-content/uploads/2016/06/character_ryu.png)"
-}
+As seguintes rotas estão disponíveis para manipulação dos dados dos lutadores:
+
+* **Listar todos os lutadores:**
+    * `GET /personagens`
+
+* **Buscar um lutador por ID:**
+    * `GET /personagens/:id`
+
+* **Cadastrar um novo lutador:**
+    * `POST /personagens`
+    * **Corpo da requisição (JSON):**
+        ```json
+        {
+          "nome": "Nome do Lutador",
+          "idade": 30,
+          "imagem": "URL da imagem",
+          "descricao": "Descrição do lutador",
+          "habilidades": "Habilidades do lutador"
+        }
+        ```
+
+* **Atualizar um lutador:**
+    * `PUT /personagens/:id`
+    * **Corpo da requisição (JSON):**
+        ```json
+        {
+          "nome": "Novo Nome do Lutador",
+          "idade": 31,
+          "imagem": "Nova URL da imagem",
+          "descricao": "Nova descrição do lutador",
+          "habilidades": "Novas habilidades do lutador"
+        }
+        ```
+
+* **Excluir um lutador:**
+    * `DELETE /personagens/:id`
