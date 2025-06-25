@@ -1,36 +1,27 @@
+import api from './api'; // Seu arquivo de configuração do Axios
 
-import api from './api';
+const PersonagemService = {
+    criar: (data) => {
+        // Envia o objeto 'data' como JSON
+        return api.post('/personagens', data);
+    },
 
-class PersonagemService {
-  // Listar todos os personagens
-  static async listar() {
-    const response = await api.get('/personagens');
-    return response.data;
-  }
+    buscarTodos: () => {
+        return api.get('/personagens');
+    },
 
-  // Buscar personagem por ID
-  static async buscarPorId(id) {
-    const response = await api.get(`/personagens/${id}`);
-    return response.data;
-  }
+    buscarPorId: (id) => {
+        return api.get(`/personagens/${id}`);
+    },
 
-  // Criar personagem
-  static async criar(dados) {
-    const response = await api.post('/personagens', dados);
-    return response.data;
-  }
+    atualizar: (id, data) => {
+        // Envia o objeto 'data' como JSON para a rota de atualização
+        return api.put(`/personagens/${id}`, data);
+    },
 
-  // Atualizar personagem
-  static async atualizar(id, dados) {
-    const response = await api.put(`/personagens/${id}`, dados);
-    return response.data;
-  }
-
-  // Deletar personagem
-  static async deletar(id) {
-    const response = await api.delete(`/personagens/${id}`);
-    return response.data;
-  }
-}
+    deletar: (id) => {
+        return api.delete(`/personagens/${id}`);
+    }
+};
 
 export default PersonagemService;

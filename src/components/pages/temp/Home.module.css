@@ -1,15 +1,13 @@
-
 .formContainer {
   display: flex;
-  flex-direction: column; /* Empilha os itens verticalmente */
-  align-items: center;    /* Centraliza os itens horizontalmente */
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   min-height: 80vh;
   padding: 2rem;
-  gap: 2rem; /* Adiciona um espaço entre o título e o formulário */
+  gap: 2rem;
 }
 
-/* Estilo para o título principal da página */
 .page_title {
   text-align: center;
   font-family: 'VT323', monospace;
@@ -17,7 +15,6 @@
   font-size: 2.5rem;
 }
 
-/* Card principal que envolve o conteúdo */
 .form {
   background-color: var(--cor-secundaria);
   padding: 2rem;
@@ -25,16 +22,14 @@
   border: 2px solid var(--cor-destaque);
   box-shadow: var(--sombra-neon);
   width: 100%;
-  max-width: 800px; /* A largura máxima já está definida */
+  max-width: 800px;
   text-align: center;
   display: flex;
-  justify-content: center;  
-  align-items: center; 
-  /* LINHA ADICIONADA PARA CENTRALIZAR */
-  margin: 0 auto; 
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
 }
 
-/* Grid para organizar os cards dos personagens */
 .personagens_container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -42,7 +37,6 @@
     width: 100%;
 }
 
-/* Estilo para cada card de personagem */
 .personagem_card {
     background-color: var(--cor-principal);
     padding: 1.5rem;
@@ -64,13 +58,19 @@
 .personagem_card h2 {
     text-align: center;
     margin-bottom: 1.5rem;
-    font-size: 1.8rem;
+    font-size: 4rem;
+    font-weight: normal;
+    color: var(--cor-texto);
+    word-wrap: break-word;
 }
 
 .personagem_card p {
     margin-bottom: 0.8rem;
-    font-size: 1.1rem;
-    flex-grow: 1; /* Faz o conteúdo ocupar espaço para alinhar os botões */
+    font-size: 1.2rem;
+    flex-grow: 1;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 .personagem_imagem {
@@ -82,14 +82,12 @@
     border: 1px solid var(--cor-destaque);
 }
 
-/* Container para os botões de ação */
 .personagem_actions {
     margin-top: 1.5rem;
     display: flex;
     gap: 1rem;
 }
 
-/* Estilo base do botão (para <button> e <a>) */
 .button {
   width: 100%;
   padding: 1rem;
@@ -98,7 +96,7 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-family: 'Cyber', sans-serif;
+  font-family: 'VT323', sans-serif;
   font-size: 1.2rem;
   transition: all 0.3s ease;
   text-transform: uppercase;
@@ -112,7 +110,6 @@
   color: var(--cor-texto);
 }
 
-/* Estilos para mensagens de feedback */
 .success_message {
     padding: 1rem;
     margin-bottom: 1rem;
@@ -132,9 +129,12 @@
     text-align: center;
 }
 
-/* Estilo para o link de cadastro quando não há personagens */
 .link_cadastro {
     color: var(--cor-destaque);
     text-decoration: underline;
     font-weight: bold;
+}
+
+h2{
+    font-family: 'VT323';
 }
