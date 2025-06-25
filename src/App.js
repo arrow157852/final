@@ -1,16 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
-import {useState} from'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/layout/Navbar';
+import Home from './components/pages/temp/Home';
+import FighterForm from './components/communs/formFigther/formFigther';
 
 function App() {
-  const [name, setName] = useState('');
-  const [tipo, setTipo] = useState('');
-  const [especial, setespecial] = useState('');
- 
   return (
-    <div className="App">
-     
-    </div>
+    <Router>
+      <Navbar />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/cadastro" element={<FighterForm />} />
+          <Route path="/editar/:id" element={<FighterForm />} />
+        </Routes>
+      </main>
+    </Router>
   );
 }
 
