@@ -13,7 +13,7 @@ Este é um projeto full stack desenvolvido como trabalho final da disciplina de 
 * **Back-end:**
     * Node.js
     * Express
-    * MongoDB com Mongoose
+    * Mysql
     * CORS
 
 ## Instalação e Execução
