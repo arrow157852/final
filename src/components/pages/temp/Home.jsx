@@ -1,48 +1,60 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../../services/api';
+import api from '../../../services/api'; 
 import { Link } from 'react-router-dom';
 import styles from './Home.module.css';
 
 function Home() {
-    const [fighters, setFighters] = useState([]);
+    
+    const [personagens, setPersonagens] = useState([]); 
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        api.get('/fighters')
+        
+        api.get('/personagens')
             .then(response => {
-                setFighters(response.data);
+                setPersonagens(response.data);
                 setLoading(false);
             })
             .catch(error => {
-                console.error("Erro ao buscar lutadores!", error);
+                
+                console.error("Erro ao buscar personagens!", error);
                 setLoading(false);
             });
     }, []);
 
     const handleDelete = (id) => {
-        api.delete(`/fighters/${id}`)
+       
+        api.delete(`/personagens/${id}`)
             .then(() => {
-                setFighters(fighters.filter(fighter => fighter._id !== id));
+                
+                setPersonagens(personagens.filter(p => p._id !== id));
             })
-            .catch(error => console.error("Erro ao excluir lutador!", error));
+            .catch(error => {
+               
+                console.error("Erro ao excluir personagem!", error);
+            });
     };
 
     if (loading) {
-        return <p>Carregando lutadores...</p>;
+        
+        return <p>Carregando personagens...</p>;
     }
 
     return (
         <div className={styles.listContainer}>
-            <h1>Lutadores Cadastrados</h1>
+            
+            <h1>Personagens Cadastrados</h1>
             <div className={styles.fightersGrid}>
-                {fighters.map(fighter => (
-                    <div key={fighter._id} className={styles.fighterCard}>
-                        <img src={fighter.imageUrl} alt={fighter.name} className={styles.fighterImage} />
-                        <h2>{fighter.name}</h2>
-                        <p>{fighter.style}</p>
+                
+                {personagens.map(personagem => (
+                    <div key={personagem._id} className={styles.fighterCard}>
+                        
+                        <img src={personagem.imageUrl} alt={personagem.name} className={styles.fighterImage} />
+                        <h2>{personagem.name}</h2>
+                        <p>{personagem.style}</p>
                         <div className={styles.actions}>
-                            <Link to={`/editar/${fighter._id}`} className={styles.editButton}>Editar</Link>
-                            <button onClick={() => handleDelete(fighter._id)} className={styles.deleteButton}>Excluir</button>
+                            <Link to={`/editar/${personagem._id}`} className={styles.editButton}>Editar</Link>
+                            <button onClick={() => handleDelete(personagem._id)} className={styles.deleteButton}>Excluir</button>
                         </div>
                     </div>
                 ))}
