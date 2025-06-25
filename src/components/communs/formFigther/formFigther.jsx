@@ -7,7 +7,9 @@ import Button from "../button/button";
 const FormFigther = ({ onSubmit, initialData }) => {
   const [personagem, setPersonagem] = useState({
     nome: "",
-    poder: "",
+    tipoDeLuta: "",
+    poderSpecial: "",
+
   });
   const [file, setFile] = useState(null); // Estado para o arquivo da imagem
   const [preview, setPreview] = useState(null); // Estado para o preview da imagem
@@ -17,9 +19,10 @@ const FormFigther = ({ onSubmit, initialData }) => {
     if (initialData) {
       setPersonagem({
         nome: initialData.nome || "",
-        poder: initialData.poder || "",
+        tipoDeLuta: initialData.tipoDeLuta || "",
+        poderSpecial: initialData.poderSpecial || "",
       });
-      // Se houver uma imagem, define o preview
+      
       if (initialData.imagem) {
         setPreview(initialData.imagem);
       }
@@ -48,7 +51,9 @@ const FormFigther = ({ onSubmit, initialData }) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("nome", personagem.nome);
-    formData.append("poder", personagem.poder);
+    formData.append("tipoDeLuta", personagem.tipoDeLuta);
+    formData.append("poderSpecial", personagem.poderSpecial);
+    
     if (file) {
       formData.append("imagem", file);
     }
@@ -80,12 +85,21 @@ const FormFigther = ({ onSubmit, initialData }) => {
         />
         <input
           type="text"
-          name="poder"
-          value={personagem.poder}
+          name="tipoDeLuta"
+          value={personagem.tipoDeLuta}
+          onChange={handleChange}
+          placeholder="tipo de luta  do Personagem"
+          required
+        />
+        <input
+          type="text"
+          name="poderSpecial"
+          value={personagem.poderSpecial}
           onChange={handleChange}
           placeholder="Poder do Personagem"
           required
         />
+        
         <Button name={initialData ? "Salvar Alterações" : "Cadastrar"} type="submit" />
       </form>
     </div>
