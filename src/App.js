@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Home from './components/pages/temp/Home';
-import FighterForm from './components/communs/formFigther/formFigther';
+import FighterForm from './components/pages/cadastro/cadastro';
 
 function App() {
   return (
