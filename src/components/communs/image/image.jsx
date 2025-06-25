@@ -1,10 +1,18 @@
+import { AdvancedImage } from '@cloudinary/react';
+import cld from '../../services/cloudinary'; // Importe a instância configurada
 
-import style from "./image.module.css"
+const Image = () => {
+  // Use a instância 'cld' para criar sua imagem
+  const myImage = cld.image('public_id_da_sua_imagem');
 
-const image=({src, alt})=>{
-return <div>
-    <img src={src} alt={alt}/>
-</div>
-}
+  // Aplique transformações se desejar
+  myImage.format('auto').quality('auto');
 
-export default  image;
+  return (
+    <div>
+      <AdvancedImage cldImg={myImage} />
+    </div>
+  );
+};
+
+export default Image;
