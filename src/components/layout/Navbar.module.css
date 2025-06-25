@@ -1,0 +1,21 @@
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem;
+  background-color: var(--cor-secundaria);
+  border-bottom: 2px solid var(--cor-destaque);
+}
+
+.navbar a {
+  color: var(--cor-texto);
+  text-decoration: none;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.navbar a:hover {
+  color: var(--cor-destaque);
+  text-shadow: var(--sombra-neon);
+}

@@ -1,67 +1,95 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import api from '../../../services/api'; 
-import styles from './formFigther.module.css';
+import { useState, useCallback, useEffect } from "react";
+import { useDropzone } from "react-dropzone";
+import styles from "./formFigther.module.css";
+import Button from "../button/button";
 
-import ImageUploader from '../imageUploader/ImageUploader'; 
+// O componente agora recebe 'initialData' como propriedade
+const FormFigther = ({ onSubmit, initialData }) => {
+  const [personagem, setPersonagem] = useState({
+    nome: "",
+    poder: "",
+  });
+  const [file, setFile] = useState(null); // Estado para o arquivo da imagem
+  const [preview, setPreview] = useState(null); // Estado para o preview da imagem
 
-function FormFigther() {
-    
-    const [personagemData, setPersonagemData] = useState({ name: '', style: '', imageUrl: '' });
-    const navigate = useNavigate();
-    const { id } = useParams();
+  // Efeito para preencher o formulário quando 'initialData' for recebido
+  useEffect(() => {
+    if (initialData) {
+      setPersonagem({
+        nome: initialData.nome || "",
+        poder: initialData.poder || "",
+      });
+      // Se houver uma imagem, define o preview
+      if (initialData.imagem) {
+        setPreview(initialData.imagem);
+      }
+    }
+  }, [initialData]);
 
-    useEffect(() => {
-        if (id) {
-            api.get(`/personagens/${id}`)
-                .then(response => setPersonagemData(response.data))
-                .catch(error => console.error("Erro ao buscar dados do personagem!", error));
-        }
-    }, [id]);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPersonagem({ ...personagem, [name]: value });
+  };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setPersonagemData(prevState => ({ ...prevState, [name]: value }));
-    };
+  const onDrop = useCallback((acceptedFiles) => {
+    const selectedFile = acceptedFiles[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setPreview(URL.createObjectURL(selectedFile));
+    }
+  }, []);
 
-    // 2. Crie a função para receber a URL do upload
-    const handleImageUpload = (url) => {
-        setPersonagemData(prevState => ({ ...prevState, imageUrl: url }));
-    };
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: 'image/*'
+  });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const method = id ? 'put' : 'post';
-        const url = id ? `/personagens/${id}` : '/personagens';
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("nome", personagem.nome);
+    formData.append("poder", personagem.poder);
+    if (file) {
+      formData.append("imagem", file);
+    }
+    onSubmit(formData);
+  };
 
-        api[method](url, personagemData)
-            .then(() => navigate('/'))
-            .catch(error => console.error("Erro ao salvar personagem!", error));
-    };
+  return (
+    <div className={styles.formContainer}>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <h1>{initialData ? "Editar Personagem" : "Cadastrar Personagem"}</h1>
 
-    return (
-        <div className={styles.formContainer}>
-            <form onSubmit={handleSubmit} className={styles.form}>
-                
-                <h1>{id ? 'Editar Personagem' : 'Cadastrar Personagem'}</h1>
-                <input name="name" value={personagemData.name} onChange={handleChange} placeholder="Nome do Personagem" required />
-                <input name="style" value={personagemData.style} onChange={handleChange} placeholder="Estilo de Luta" required />
-                
-                {/* 3. Substitua o input de URL pelo componente ImageUploader */}
-                <ImageUploader onUploadSuccess={handleImageUpload} />
-
-                {/* Mostra uma prévia da imagem que foi enviada */}
-                {personagemData.imageUrl && (
-                    <div style={{ marginTop: '15px' }}>
-                        <p>Preview da imagem:</p>
-                        <img src={personagemData.imageUrl} alt="Preview" style={{ width: '150px', border: '1px solid #ddd', borderRadius: '4px' }}/>
-                    </div>
-                )}
-                
-                <button type="submit">Salvar</button>
-            </form>
+        {/* Área de Drag and Drop */}
+        <div {...getRootProps()} className={`${styles.dropzone} ${isDragActive ? styles.active : ''}`}>
+          <input {...getInputProps()} />
+          {preview ? (
+            <img src={preview} alt="Preview" className={styles.previewImage} />
+          ) : (
+            <p>Arraste uma imagem para cá ou clique para selecionar</p>
+          )}
         </div>
-    );
-}
+
+        <input
+          type="text"
+          name="nome"
+          value={personagem.nome}
+          onChange={handleChange}
+          placeholder="Nome do Personagem"
+          required
+        />
+        <input
+          type="text"
+          name="poder"
+          value={personagem.poder}
+          onChange={handleChange}
+          placeholder="Poder do Personagem"
+          required
+        />
+        <Button name={initialData ? "Salvar Alterações" : "Cadastrar"} type="submit" />
+      </form>
+    </div>
+  );
+};
 
 export default FormFigther;
